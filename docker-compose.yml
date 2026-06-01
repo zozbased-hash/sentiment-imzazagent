@@ -1,0 +1,48 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:15-alpine
+    container_name: memecoin_postgres
+    environment:
+      POSTGRES_USER: memecoin
+      POSTGRES_PASSWORD: securepassword
+      POSTGRES_DB: memecoin_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - memecoin_network
+
+  redis:
+    image: redis:7-alpine
+    container_name: memecoin_redis
+    ports:
+      - "6379:6379"
+    networks:
+      - memecoin_network
+
+  agent:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: memecoin_agent
+    environment:
+      - BASE_RPC_URL=https://mainnet.base.org
+      - DATABASE_URL=postgresql://memecoin:securepassword@postgres:5432/memecoin_db
+      - REDIS_URL=redis://redis:6379
+    depends_on:
+      - postgres
+      - redis
+    volumes:
+      - .:/app
+    networks:
+      - memecoin_network
+
+volumes:
+  postgres_data:
+
+networks:
+  memecoin_network:
+    driver: bridge
