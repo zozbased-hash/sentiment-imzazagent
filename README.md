@@ -1,4 +1,5 @@
 # Memecoin AI Agent - Base Blockchain 🚀
+<img width="478" height="481" alt="Screenshot_2-removebg-preview" src="https://github.com/user-attachments/assets/97666ea5-2211-477b-baab-ae9f103a362e" />
 
 An advanced AI Agent for sentiment analysis and trading signals on memecoin projects on Base blockchain, integrated with Uniswap V3.
 
